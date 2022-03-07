@@ -17,3 +17,12 @@
 
 - import_tasks: renew-cron.yml
   when: certbot_auto_renew
+
+- name: Setup pre/post hooks
+  template:
+    src: 'hooks-{{ item }}.sh'
+    dest: '/etc/letsencrypt/renewal-hooks/{{ item }}/services-{{ item }}.sh'
+    mode: 0755
+  with_items:
+    - pre
+    - post
